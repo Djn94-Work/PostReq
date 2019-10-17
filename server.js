@@ -1,16 +1,5 @@
-const https = require("https");
+const http = require("http");
 const port = 3000;
-
-const options = {
-  hostname: "127.0.0.1",
-  port: 3000,
-  path: "/",
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    "Content-Length": data.length
-  }
-};
 const array = [
   "A good ol movie quote",
   "Honey? Wheeeere's my super suit??",
@@ -27,18 +16,29 @@ let randomQuote = array[Math.floor(Math.random() * 9)];
 const data = JSON.stringify({
   quote: randomQuote
 });
+const options = {
+  hostname: "127.0.0.1",
+  port: 3000,
+  path: "/",
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "Content-Length": data.length
+  }
+};
+
 const requestHandler = (req, res) => {
   console.log(req.url);
-  res.end("Helo w0rld");
+  res.end(randomQuote);
 };
-const server = https.createServer(requestHandler);
+const server = http.createServer(requestHandler);
 
 server.listen(port, err => {
   if (err) {
     throw err;
   }
   console.log("serv listening on port " + port);
-  const req = https.request(options, res => {
+  const req = http.request(options, res => {
     console.log(`statusCode: ${res.statusCode}`);
     res.on("data", d => {
       process.stdout.write(d);
@@ -52,13 +52,13 @@ server.listen(port, err => {
 });
 
 //EXPRESS SOLUTION
-// const express = require("express");
-// const app = express();
-// const port = 3000;
-// app.get("/", function(req, res) {
-//   res.send("hello");
-// });
-// let quote = randomQuote.toString();
-// app.post("/submit", function(req, res) {
-//   res.send(quote);
-// });
+const express = require("express");
+const app = express();
+const port = 3000;
+app.get("/", function(req, res) {
+  res.send("hello");
+});
+let quote = randomQuote.toString();
+app.post("/submit", function(req, res) {
+  res.send(quote);
+});
