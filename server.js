@@ -1,11 +1,6 @@
 const https = require("https");
-const hostname = "127.0.0.1";
-const url = require("url");
 const port = 3000;
 
-const data = JSON.stringify({
-  quote: "quote"
-});
 const options = {
   hostname: "127.0.0.1",
   port: 3000,
@@ -16,7 +11,6 @@ const options = {
     "Content-Length": data.length
   }
 };
-
 const array = [
   "A good ol movie quote",
   "Honey? Wheeeere's my super suit??",
@@ -30,6 +24,9 @@ const array = [
   "You are about to witness the strength of street knowledge"
 ];
 let randomQuote = array[Math.floor(Math.random() * 9)];
+const data = JSON.stringify({
+  quote: randomQuote
+});
 const requestHandler = (req, res) => {
   console.log(req.url);
   res.end("Helo w0rld");
