@@ -63,25 +63,18 @@ let randomQuote = array[Math.floor(Math.random() * 9)];
 //     }
 //   }
 // });
-// httpServer.listen(8888);
+// httpServer.listen(3000);
 
-// console.log("web server listening on 8888");
-
+//EXPRESS SOLUTION
 const express = require("express");
 const app = express();
-// app.use(express.bodyParser());
-const PORT = 8000;
-const router = express.Router();
-app.use(express.static("public"));
-app.set("port", process.env.PORT || 3000);
-
-router.get("/", function(req, res) {
-  res.send("get route");
+const port = 3000;
+app.get("/", function(req, res) {
+  res.send("hello");
+});
+let quote = randomQuote.toString();
+app.post("/submit", function(req, res) {
+  res.send(quote);
 });
 
-router.post("/submit", function(req, res) {
-  console.log(randomQuote);
-  res.send(randomQuote);
-});
-
-app.listen(PORT, () => console.log("server listens"));
+app.listen(port, () => console.log("server listens on" + port));
